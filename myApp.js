@@ -2,7 +2,9 @@ const express = require('express');
 const helmet = require("helmet");
 const app = express();
 app.use(helmet());
-app.use(helmet.hidePoweredBy());
+app.use(helmet.hidePoweredBy());//remove the header - information disclosure
+app.use(helmet.frameguard({action: 'deny'}));//X-Frame-Options header to mitigate clickjacking - spoofing 
+//NOTE the  up-to-date header to mitigate clickjacking is frame ancestors - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors
 
 module.exports = app;
 const api = require('./server.js');
